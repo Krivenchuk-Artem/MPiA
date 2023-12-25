@@ -68,12 +68,12 @@ class PRM:
                 continue
             self.vertices.append(q_rand)
 
-            for q in self.vertices[:-1]:
-                q_near = self.near(q, k)
-                for q_n in q_near:
-                    if self.collision_free(q, q_n):
-                        self.edges.append((q, q_n))
-                        self.canvas.create_line(q[0], q[1], q_n[0], q_n[1], fill="gray")
+        for q in self.vertices[:-1]:
+            q_near = self.near(q, k)
+            for q_n in q_near:
+                if self.collision_free(q, q_n):
+                    self.edges.append((q, q_n))
+                    self.canvas.create_line(q[0], q[1], q_n[0], q_n[1], fill="gray")
 
     def find_shortest_path(self, start, goal):
         graph = {v: set() for v in self.vertices}
@@ -202,7 +202,7 @@ class RobotPathPlanner:
                 self.obstacles,
                 [self.start, self.goal] + self.intermediate_points,
             )
-            prm.prm(n=300, k=5)
+            prm.prm(n=COUNT_OF_SAMPLES, k=COUNT_OF_NEIGHBORING_SAMPLES)
 
             current_point = self.start
             for point in self.intermediate_points + [self.goal]:
